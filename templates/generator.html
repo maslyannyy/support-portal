@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+  <title>Генератор промокодов</title>
+{% endblock %}
+
+{% block bread %}
+  <li class="breadcrumb-item active" aria-current="page">Генератор промокодов</li>
+{% endblock %}
+
+{% block content %}
+  <div class="container table-scroll">
+    {% include 'form.html' %}
+    {% if list_promo %}
+      <ul class="list-group">
+        {% for promo in list_promo %}
+          <li class="list-group-item">{{ promo }}</li>
+        {% endfor %}
+      </ul>
+    {% endif %}
+  </div>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

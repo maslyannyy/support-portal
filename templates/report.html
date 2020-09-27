@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+	<title>{{ report.title }}</title>
+{% endblock %}
+
+{% block bread %}
+	<li class="breadcrumb-item active"><a href="/reports/">Отчеты</a></li>
+	<li class="breadcrumb-item active" aria-current="page">{{ report.title }}</li>
+{% endblock %}
+
+{% block content %}
+	{% include 'form.html' %}
+	<div>
+		{% if table_headers %}
+			<table class="table table-bordered table-hover table-responsive">
+				<tr> 
+					{% for header in table_headers %}
+						<th> {{ header }} </th>
+					{% endfor %}	
+				</tr>
+				{% for line in table_body %}
+					<tr>
+						{% for cell in line %}
+							<td> {{ cell }} </td>
+						{% endfor %}
+					</tr>
+				{% endfor %}
+			</table>
+		{% endif %}
+	</div>
+{% endblock %}
+
+{% block script %}
+	<script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

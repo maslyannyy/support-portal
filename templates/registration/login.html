@@ -1,0 +1,56 @@
+{% extends "../base.html" %}
+
+{% load i18n static %}
+{% load static %}
+
+{% block head %}
+  <title>Войти</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'css/login.css' %}">
+{% endblock %}
+
+{% block content %}
+<form action="{{ app_path }}" method="post" class="form-signin text-center" id="login-form">{% csrf_token %}
+  <h1 class="h3 mt-5 mb-3 font-weight-normal">Авторизация</h1>
+      {{ form.username.errors }}
+      <!-- {{ form.username.label_tag }}  -->
+      {{ form.username }}
+      {{ form.password.errors }}
+      <!-- {{ form.password.label_tag }}  -->
+      {{ form.password }}
+      {% url 'admin_password_reset' as password_reset_url %}
+      {% if password_reset_url %}
+      <div>
+        <a href="{{ password_reset_url }}">{% trans 'Forgotten your password or username?' %}</a>
+      </div>
+      {% endif %}
+      <div>
+        <label>
+          {% if form.errors and not form.non_field_errors %}
+          <p>
+            {% if form.errors.items|length == 1 %}{% trans "Please correct the error below." %}{% else %}{% trans "Please correct the errors below." %}{% endif %}
+          </p>
+          {% endif %}
+          {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+          <p>
+            {{ error }}
+          </p>
+          {% endfor %}
+          {% endif %}
+          {% if user.is_authenticated %}
+          <p>
+            {% blocktrans trimmed %}
+            You are authenticated as {{ username }}, but are not authorized to
+            access this page. Would you like to login to a different account?
+            {% endblocktrans %}
+          </p>
+          {% endif %}
+        </label>
+      </div>
+  <button class="btn btn-lg btn-primary btn-block" type="submit">Войти</button>
+</form>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

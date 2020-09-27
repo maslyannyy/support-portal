@@ -1,0 +1,77 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block head %}
+	<title>Управление</title>
+{% endblock %}
+
+{% block bread %}
+	<li class="breadcrumb-item active" aria-current="page">Управление</li>
+{% endblock %}
+
+{% block content %}
+	<p>Команды</p>
+	<ul class="list-group mb-3">
+		<li class="list-group-item"> 
+			<form id="sync_form" class="d-flex justify-content-between align-items-baseline">
+				<p class="mb-0">Синхронизировать кроны</p>
+				<input id="url" name="url" type="hidden" value="/tasks/sync/">
+				<button class="btn btn-primary sync-btn" type="button">
+					Запустить
+				</button>
+			</form>			
+		</li>
+		<li class="list-group-item">
+			<form id="sync_form" class="d-flex justify-content-between align-items-baseline">
+				<p class="mb-0">Синхронизировать организаторов</p>
+				<input id="url" name="url" type="hidden" value="/catalogs/organizers/">
+				<button class="btn btn-primary sync-btn" type="button">
+					Запустить
+				</button>
+			</form>		
+		</li>
+		<li class="list-group-item">
+			<form id="sync_form" class="d-flex justify-content-between align-items-baseline">
+				<p class="mb-0">Синхронизировать агентов</p>
+				<input id="url" name="url" type="hidden" value="/catalogs/agents/">
+				<button class="btn btn-primary sync-btn" type="button">
+					Запустить
+				</button>
+			</form>		
+		</li>
+		<li class="list-group-item"> 
+			<form id="sync_form" class="d-flex justify-content-between align-items-baseline">
+				<p class="mb-0">Синхронизировать организации</p>
+				<input id="url" name="url" type="hidden" value="/catalogs/organizations/">
+				<button class="btn btn-primary sync-btn" type="button">
+					Запустить
+				</button>
+			</form>		
+		</li>
+		<li class="list-group-item"> 
+			<form id="sync_form" class="d-flex justify-content-between align-items-baseline">
+				<p class="mb-0">Проверить фиды</p>
+				<input id="url" name="url" type="hidden" value="/feeds/check/">
+				<button class="btn btn-primary sync-btn" type="button">
+					Запустить
+				</button>
+			</form>		
+		</li>
+	</ul>
+	<p>Запущенные кроны</p>
+	<ul class="list-group">
+		{% for task in all_tasks %}
+		<li class="list-group-item d-flex justify-content-between align-items-baseline">
+			<p class="mb-0">{{ task.id }}. sleep {{ task.sleep }}; {{ task.param }} {{ task.script }}</p>
+			<button class="btn btn-primary swith-btn" type="button" value="{{ task.id }}">
+				{{ task.is_active|yesno:'Остановить,Запустить' }}
+			</button>
+		</li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block script %}
+  <script src="{% static 'js/script.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,13 @@
+[Unit]
+Description=gunicorn
+After=network.target
+
+[Service]
+User=<user>
+WorkingDirectory=/home/<user>/support-portal
+ExecStart=/home/<user>/support-portal/.venv/bin/gunicorn --workers 3 --bind unix:/home/<user>/support-portal/gunicorn/gunicorn.sock config.wsgi:application --access-logfile /home/<user>/support-portal/gunicorn/access.log --error-logfile /home/<user>/support-portal/gunicorn/error.log
+Restart=on-failure
+EnvironmentFile=/home/<user>/support-portal/env.conf
+
+[Install]
+WantedBy=multi-user.target

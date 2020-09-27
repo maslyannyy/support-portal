@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block head %}
+	<title>Отчеты</title>
+{% endblock %}
+
+{% block bread %}
+	<li class="breadcrumb-item active" aria-current="page">Отчеты</li>
+{% endblock %}
+
+{% block content %}
+	<ul class="list-group">
+		{% for title, slug, comment in report_list %}
+			<li class="list-group-item"><a href="/reports/{{ slug }}"{% if comment %} data-toggle="tooltip" data-placement="top" title="{{ comment }}"{% endif %}> {{ title }} </a></li>
+		{% endfor %}
+	</ul>
+{% endblock %}
+
+{% block script %}
+	<script>
+		$(document).ready(function(){
+		  $('[data-toggle="tooltip"]').tooltip();
+		});
+	</script>
+{% endblock %}
